@@ -7,7 +7,7 @@ import EventModal from './EventModal';
 const Event = ({ event, dateKey, onDelete, onClick }) => {
   const handleDelete = (e) => {
     e.stopPropagation();
-    if (window.confirm('일정을 삭제 하시겠습니까?')) {
+    if (window.confirm('Are you sure you want to delete this event?')) {
       onDelete(dateKey, event.id);
     }
   };
@@ -92,7 +92,7 @@ const Calendar = () => {
   return (
     <div className="h-[calc(100vh-64px)] p-6">
       <div className="bg-white rounded-lg shadow-lg h-full">
-        {/* 헤더 */}
+        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b bg-naver-pastel-gray">
           <div className="flex items-center gap-4">
             <button 
@@ -102,7 +102,7 @@ const Calendar = () => {
               &lt;
             </button>
             <h2 className="text-2xl font-bold text-naver-pastel-navy">
-              {format(currentDate, 'yyyy년 M월', { locale: ko })}
+              {format(currentDate, 'MMMM yyyy')}
             </h2>
             <button 
               onClick={handleNextMonth}
@@ -119,13 +119,13 @@ const Calendar = () => {
             }}
             className="px-4 py-2 bg-naver-pastel-navy text-white rounded hover:bg-naver-pastel-navy/80"
           >
-            일정 추가
+            Add Event
           </button>
         </div>
 
-        {/* 요일 */}
+        {/* Weekdays */}
         <div className="grid grid-cols-7 gap-2 p-6 bg-naver-pastel-gray/30">
-          {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
             <div 
               key={day}
               className={`
@@ -139,7 +139,7 @@ const Calendar = () => {
           ))}
         </div>
 
-        {/* 날짜 */}
+        {/* Dates */}
         <div className="grid grid-cols-7 gap-2 p-6 flex-1">
           {days.map((day, index) => {
             const dateKey = getDateKey(day);

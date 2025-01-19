@@ -1,8 +1,15 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-const Navbar = ({ isLoggedIn, username, onLogout }) => {
+const Navbar = () => {
   const navigate = useNavigate();
+  const { isLoggedIn, username, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <nav className="bg-white shadow-md">
@@ -14,12 +21,12 @@ const Navbar = ({ isLoggedIn, username, onLogout }) => {
           <div className="ml-auto">
             {isLoggedIn ? (
               <div className="flex items-center gap-4">
-                <span className="text-gray-600">{username}님</span>
+                <span className="text-gray-600">{username}</span>
                 <button
-                  onClick={onLogout}
+                  onClick={handleLogout}
                   className="px-4 py-2 bg-naver-pastel-navy text-white rounded hover:bg-naver-pastel-navy/80"
                 >
-                  로그아웃
+                  Logout
                 </button>
               </div>
             ) : (
@@ -27,7 +34,7 @@ const Navbar = ({ isLoggedIn, username, onLogout }) => {
                 onClick={() => navigate('/login')}
                 className="px-4 py-2 bg-naver-pastel-navy text-white rounded hover:bg-naver-pastel-navy/80"
               >
-                로그인
+                Login
               </button>
             )}
           </div>

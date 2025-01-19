@@ -37,7 +37,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
     e.preventDefault();
     
     if (!validateTimes()) {
-      alert('시작 시간이 종료 시간보다 앞선 시간이어야 합니다.');
+      alert('Start time must be earlier than end time.');
       return;
     }
     
@@ -69,11 +69,11 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
         <div className="flex justify-between items-center mb-4">
           <div>
             <h2 className="text-xl font-bold text-naver-pastel-navy">
-              {selectedEvent ? '일정 상세' : '새 일정 추가'}
+              {selectedEvent ? 'Event Details' : 'Add New Event'}
             </h2>
             {eventData.date && (
               <p className="text-sm text-gray-500 mt-1">
-                {format(new Date(eventData.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')), 'yyyy년 M월 d일', { locale: ko })}
+                {format(new Date(eventData.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')), 'MMMM d, yyyy')}
               </p>
             )}
           </div>
@@ -86,7 +86,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 mb-2">일정 이름</label>
+            <label className="block text-gray-700 mb-2">Event Title</label>
             <input
               type="text"
               value={eventData.title}
@@ -97,7 +97,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
             />
           </div>
           <div>
-            <label className="block text-gray-700 mb-2">날짜</label>
+            <label className="block text-gray-700 mb-2">Date</label>
             <input
               type="date"
               value={formatDateForInput(eventData.date)}
@@ -109,7 +109,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 mb-2">시작 시간</label>
+              <label className="block text-gray-700 mb-2">Start Time</label>
               <input
                 type="time"
                 value={eventData.startTime}
@@ -120,7 +120,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               />
             </div>
             <div>
-              <label className="block text-gray-700 mb-2">종료 시간</label>
+              <label className="block text-gray-700 mb-2">End Time</label>
               <input
                 type="time"
                 value={eventData.endTime}
@@ -132,7 +132,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
             </div>
           </div>
           <div>
-            <label className="block text-gray-700 mb-2">일정 내용</label>
+            <label className="block text-gray-700 mb-2">Description</label>
             <textarea
               value={eventData.content}
               onChange={(e) => setEventData({ ...eventData, content: e.target.value })}
@@ -146,7 +146,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               type="submit"
               className="w-full bg-naver-pastel-navy text-white py-2 rounded hover:bg-naver-pastel-navy/80"
             >
-              저장
+              Save
             </button>
           )}
         </form>
