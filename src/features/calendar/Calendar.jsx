@@ -15,7 +15,7 @@ const Event = ({ event, dateKey, onDelete, onClick }) => {
 
   return (
     <div
-      className="text-xs p-2 bg-naver-pastel-blue/20 rounded group relative hover:bg-naver-pastel-blue/30 cursor-pointer"
+      className="text-xs p-2 bg-color-pastel-blue/20 rounded group relative hover:bg-color-pastel-blue/30 cursor-pointer"
       onClick={() => onClick(event)}
     >
       <div className="flex flex-col gap-1">
@@ -80,20 +80,20 @@ const Calendar = () => {
     <div className="h-[calc(100vh-64px)] p-6">
       <div className="bg-white rounded-lg shadow-lg h-full">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b bg-naver-pastel-gray">
+        <div className="flex items-center justify-between p-6 border-b bg-color-pastel-gray">
           <div className="flex items-center gap-4">
             <button 
               onClick={handlePrevMonth}
-              className="p-3 text-lg hover:bg-naver-pastel-blue/20 rounded text-naver-pastel-navy"
+              className="p-3 text-lg hover:bg-color-pastel-blue/20 rounded text-color-pastel-navy"
             >
               &lt;
             </button>
-            <h2 className="text-2xl font-bold text-naver-pastel-navy">
+            <h2 className="text-2xl font-bold text-color-pastel-navy">
               {format(currentDate, 'MMMM yyyy')}
             </h2>
             <button 
               onClick={handleNextMonth}
-              className="p-3 text-lg hover:bg-naver-pastel-blue/20 rounded text-naver-pastel-navy"
+              className="p-3 text-lg hover:bg-color-pastel-blue/20 rounded text-color-pastel-navy"
             >
               &gt;
             </button>
@@ -104,14 +104,14 @@ const Calendar = () => {
               setSelectedDate(null);
               setIsModalOpen(true);
             }}
-            className="px-4 py-2 bg-naver-pastel-navy text-white rounded hover:bg-naver-pastel-navy/80"
+            className="px-4 py-2 bg-color-pastel-navy text-white rounded hover:bg-color-pastel-navy/80"
           >
             Add Event
           </button>
         </div>
 
         {/* Weekdays */}
-        <div className="grid grid-cols-7 gap-2 p-6 bg-naver-pastel-gray/30">
+        <div className="grid grid-cols-7 gap-2 p-6 bg-color-pastel-gray/30">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
             <div 
               key={day}
@@ -138,7 +138,7 @@ const Calendar = () => {
                 className={`
                   min-h-[120px] p-3 border border-gray-100 rounded
                   ${format(day, 'MM') !== format(currentDate, 'MM') ? 'bg-gray-50' : 'bg-white'}
-                  ${format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd') ? 'bg-naver-pastel-navy/10' : ''}
+                  ${format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd') ? 'bg-color-pastel-navy/10' : ''}
                 `}
               >
                 <div className={`

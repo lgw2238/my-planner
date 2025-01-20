@@ -15,7 +15,7 @@ const ErrorPage = () => {
         <p className="text-gray-600 mb-4">Sorry, an unexpected error has occurred.</p>
         <a
           href="/"
-          className="text-naver-pastel-navy hover:underline"
+          className="text-color-pastel-navy hover:underline"
         >
           Go back home
         </a>

@@ -80,7 +80,7 @@ const EvaluationList = () => {
     <div className="p-6">
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-naver-pastel-navy">
+          <h2 className="text-2xl font-bold text-color-pastel-navy">
             Evaluation Management
           </h2>
           <button
@@ -88,7 +88,7 @@ const EvaluationList = () => {
               setSelectedEvaluation(null);
               setIsModalOpen(true);
             }}
-            className="bg-naver-pastel-navy text-white px-4 py-2 rounded hover:bg-naver-pastel-navy/80"
+            className="bg-color-pastel-navy text-white px-4 py-2 rounded hover:bg-color-pastel-navy/80"
           >
             Add New Evaluation
           </button>
@@ -144,7 +144,7 @@ const EvaluationList = () => {
                         setSelectedEvaluation(evaluation);
                         setIsModalOpen(true);
                       }}
-                      className="text-naver-pastel-navy hover:text-naver-pastel-navy/80 mr-3"
+                      className="text-color-pastel-navy hover:text-color-pastel-navy/80 mr-3"
                     >
                       Edit
                     </button>
@@ -170,7 +170,7 @@ const EvaluationList = () => {
               className={`px-3 py-1 rounded ${
                 currentPage === 1
                   ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-naver-pastel-navy text-white hover:bg-naver-pastel-navy/80'
+                  : 'bg-color-pastel-navy text-white hover:bg-color-pastel-navy/80'
               }`}
             >
               Previous
@@ -183,7 +183,7 @@ const EvaluationList = () => {
                   onClick={() => setCurrentPage(number)}
                   className={`px-3 py-1 rounded ${
                     currentPage === number
-                      ? 'bg-naver-pastel-navy text-white'
+                      ? 'bg-color-pastel-navy text-white'
                       : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                   }`}
                 >
@@ -198,7 +198,7 @@ const EvaluationList = () => {
               className={`px-3 py-1 rounded ${
                 currentPage === totalPages
                   ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-naver-pastel-navy text-white hover:bg-naver-pastel-navy/80'
+                  : 'bg-color-pastel-navy text-white hover:bg-color-pastel-navy/80'
               }`}
             >
               Next

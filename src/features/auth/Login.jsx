@@ -27,7 +27,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold text-naver-pastel-navy mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-bold text-color-pastel-navy mb-6 text-center">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700 mb-2" htmlFor="username">
@@ -38,7 +38,7 @@ const Login = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               placeholder="Enter your username"
               required
             />
@@ -52,14 +52,14 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               placeholder="Enter your password"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-naver-pastel-navy text-white py-2 rounded-lg hover:bg-naver-pastel-navy/80 transition-colors"
+            className="w-full bg-color-pastel-navy text-white py-2 rounded-lg hover:bg-color-pastel-navy/80 transition-colors"
           >
             Login
           </button>

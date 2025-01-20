@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className="bg-white shadow-md">
       <div className="max-w-[1920px] mx-auto px-8 py-3">
         <div className="flex justify-between items-center">
-          <Link to="/" className="text-naver-pastel-navy font-bold text-xl hover:opacity-80">
+          <Link to="/" className="text-color-pastel-navy font-bold text-xl hover:opacity-80">
             My Planner
           </Link>
           <div className="ml-auto">
@@ -24,7 +24,7 @@ const Navbar = () => {
                 <span className="text-gray-600">{user.username}</span>
                 <button
                   onClick={handleLogout}
-                  className="px-4 py-2 bg-naver-pastel-navy text-white rounded hover:bg-naver-pastel-navy/80"
+                  className="px-4 py-2 bg-color-pastel-navy text-white rounded hover:bg-color-pastel-navy/80"
                 >
                   Logout
                 </button>
@@ -32,7 +32,7 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={() => navigate('/login')}
-                className="px-4 py-2 bg-naver-pastel-navy text-white rounded hover:bg-naver-pastel-navy/80"
+                className="px-4 py-2 bg-color-pastel-navy text-white rounded hover:bg-color-pastel-navy/80"
               >
                 Login
               </button>

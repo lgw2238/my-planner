@@ -36,7 +36,7 @@ const EvaluationModal = ({ isOpen, onClose, evaluation, onSave }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-96">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-naver-pastel-navy">
+          <h2 className="text-xl font-bold text-color-pastel-navy">
             {evaluation ? 'Edit Evaluation' : 'Add New Evaluation'}
           </h2>
           <button
@@ -54,7 +54,7 @@ const EvaluationModal = ({ isOpen, onClose, evaluation, onSave }) => {
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               required
             />
           </div>
@@ -64,7 +64,7 @@ const EvaluationModal = ({ isOpen, onClose, evaluation, onSave }) => {
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
             >
               <option value="Pending">Pending</option>
               <option value="In Progress">In Progress</option>
@@ -80,14 +80,14 @@ const EvaluationModal = ({ isOpen, onClose, evaluation, onSave }) => {
               type="date"
               value={formData.dueDate}
               onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-naver-pastel-navy text-white py-2 rounded hover:bg-naver-pastel-navy/80"
+            className="w-full bg-color-pastel-navy text-white py-2 rounded hover:bg-color-pastel-navy/80"
           >
             {evaluation ? 'Update' : 'Add'}
           </button>

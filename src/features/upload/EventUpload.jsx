@@ -107,13 +107,13 @@ const EventUpload = () => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-naver-pastel-navy mb-6">Upload Schedule</h2>
+      <h2 className="text-2xl font-bold text-color-pastel-navy mb-6">Upload Schedule</h2>
       
       <div className="space-y-4">
         <div>
           <button
             onClick={downloadTemplate}
-            className="bg-naver-pastel-navy text-white px-4 py-2 rounded hover:bg-naver-pastel-navy/80"
+            className="bg-color-pastel-navy text-white px-4 py-2 rounded hover:bg-color-pastel-navy/80"
           >
             template download
           </button>
@@ -154,8 +154,8 @@ const EventUpload = () => {
           <button
             onClick={processExcel}
             disabled={!file || loading}
-            className={`w-full bg-naver-pastel-navy text-white py-2 rounded
-              ${(!file || loading) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-naver-pastel-navy/80'}`}
+            className={`w-full bg-color-pastel-navy text-white py-2 rounded
+              ${(!file || loading) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-color-pastel-navy/80'}`}
           >
             {loading ? 'processing...' : 'upload'}
           </button>

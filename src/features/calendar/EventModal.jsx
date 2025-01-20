@@ -68,7 +68,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
       <div className="bg-white rounded-lg p-6 w-96">
         <div className="flex justify-between items-center mb-4">
           <div>
-            <h2 className="text-xl font-bold text-naver-pastel-navy">
+            <h2 className="text-xl font-bold text-color-pastel-navy">
               {selectedEvent ? 'Event Details' : 'Add New Event'}
             </h2>
             {eventData.date && (
@@ -91,7 +91,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               type="text"
               value={eventData.title}
               onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               required
               readOnly={selectedEvent}
             />
@@ -102,7 +102,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               type="date"
               value={formatDateForInput(eventData.date)}
               onChange={handleDateChange}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               required
               readOnly={selectedEvent}
             />
@@ -114,7 +114,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
                 type="time"
                 value={eventData.startTime}
                 onChange={(e) => handleTimeChange('startTime', e.target.value)}
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
                 required
                 readOnly={selectedEvent}
               />
@@ -125,7 +125,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
                 type="time"
                 value={eventData.endTime}
                 onChange={(e) => handleTimeChange('endTime', e.target.value)}
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy"
+                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
                 required
                 readOnly={selectedEvent}
               />
@@ -136,7 +136,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
             <textarea
               value={eventData.content}
               onChange={(e) => setEventData({ ...eventData, content: e.target.value })}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-naver-pastel-navy h-24"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy h-24"
               required
               readOnly={selectedEvent}
             />
@@ -144,7 +144,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
           {!selectedEvent && (
             <button
               type="submit"
-              className="w-full bg-naver-pastel-navy text-white py-2 rounded hover:bg-naver-pastel-navy/80"
+              className="w-full bg-color-pastel-navy text-white py-2 rounded hover:bg-color-pastel-navy/80"
             >
               Save
             </button>

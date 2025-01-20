@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'naver-pastel': {
+        'color-pastel': {
           navy: '#5B6C8C',
           blue: '#A4B7DD',
           green: '#9ED6B7',
