@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Calendar from '../components/Calendar';
 import EvaluationList from '../components/EvaluationList';
-import Login from '../components/Login';
-import { ProtectedRoute } from './ProtectedRoute';
+import Login from '../pages/Login';
+import ProtectedRoute from './ProtectedRoute';
 
 // 에러 페이지 컴포넌트
 const ErrorPage = () => {
@@ -23,32 +23,30 @@ const ErrorPage = () => {
   );
 };
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
-        element: (
-          <ProtectedRoute>
-            <Calendar />
-          </ProtectedRoute>
-        ),
+        element: <Calendar />
       },
       {
-        path: '/evaluations',
-        element: (
-          <ProtectedRoute>
-            <EvaluationList />
-          </ProtectedRoute>
-        ),
-      },
-    ],
+        path: '/evaluation',
+        element: <EvaluationList />
+      }
+    ]
   },
   {
     path: '/login',
-    element: <Login />,
-  },
-]); 
+    element: <Login />
+  }
+]);
+
+export default router; 

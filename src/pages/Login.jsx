@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import useStore from '../store/useStore';
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const login = useStore((state) => state.login);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   
@@ -13,10 +13,15 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username && password) {  // 실제 환경에서는 서버 인증을 구현해야 합니다
-      login(username);
+    if (username && password) {  // 실제 환경에서는 서버 인증을 구현해야함
+      handleLogin({ username });
       navigate(from, { replace: true });
     }
+  };
+
+  const handleLogin = (userData) => {
+    login(userData);
+    // 로그인 후 처리...
   };
 
   return (

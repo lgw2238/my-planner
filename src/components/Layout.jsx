@@ -1,17 +1,18 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import { useAuth } from '../contexts/AuthContext';
+import useStore from '../store/useStore';
 
 const Layout = () => {
-  const { isLoggedIn } = useAuth();
+  const isSidebarOpen = useStore((state) => state.isSidebarOpen);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
       <Navbar />
       <div className="flex">
-        {isLoggedIn && <Sidebar />}
-        <main className="flex-1">
+        <Sidebar />
+        <main className={`flex-1 transition-all ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
           <Outlet />
         </main>
       </div>

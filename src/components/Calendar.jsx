@@ -3,6 +3,7 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, addMonths, subMont
 import { ko } from 'date-fns/locale';
 import { v4 as uuidv4 } from 'uuid';
 import EventModal from './EventModal';
+import useStore from '../store/useStore';
 
 const Event = ({ event, dateKey, onDelete, onClick }) => {
   const handleDelete = (e) => {
@@ -37,8 +38,8 @@ const Event = ({ event, dateKey, onDelete, onClick }) => {
 };
 
 const Calendar = () => {
+  const { events, addEvent, updateEvent, deleteEvent } = useStore();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [events, setEvents] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -55,33 +56,19 @@ const Calendar = () => {
   const getDateKey = (date) => format(date, 'yyyyMMdd');
 
   const handleAddEvent = (eventData) => {
-    const newEventObj = {
+    const newEvent = {
       id: uuidv4(),
       ...eventData
     };
+    addEvent(newEvent);
+  };
 
-    setEvents(prev => ({
-      ...prev,
-      [eventData.date]: [...(prev[eventData.date] || []), newEventObj]
-    }));
+  const handleUpdateEvent = (updatedEvent) => {
+    updateEvent(updatedEvent);
   };
 
   const handleDeleteEvent = (dateKey, eventId) => {
-    setEvents(prev => {
-      if (!prev[dateKey]) return prev;
-      
-      const updatedEvents = prev[dateKey].filter(event => event.id !== eventId);
-      
-      const newState = { ...prev };
-      
-      if (updatedEvents.length === 0) {
-        delete newState[dateKey];
-      } else {
-        newState[dateKey] = updatedEvents;
-      }
-      
-      return newState;
-    });
+    deleteEvent(dateKey, eventId);
   };
 
   const handleEventClick = (event) => {

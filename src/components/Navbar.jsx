@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import useStore from '../store/useStore';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, username, logout } = useAuth();
+  const { user, logout } = useStore();
 
   const handleLogout = () => {
     logout();
@@ -19,9 +19,9 @@ const Navbar = () => {
             My Planner
           </Link>
           <div className="ml-auto">
-            {isLoggedIn ? (
+            {user ? (
               <div className="flex items-center gap-4">
-                <span className="text-gray-600">{username}</span>
+                <span className="text-gray-600">{user.username}</span>
                 <button
                   onClick={handleLogout}
                   className="px-4 py-2 bg-naver-pastel-navy text-white rounded hover:bg-naver-pastel-navy/80"
