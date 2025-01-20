@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../components/Layout';
-import Calendar from '../components/Calendar';
-import EvaluationList from '../components/EvaluationList';
-import Login from '../pages/Login';
+import Layout from '../components/layout/Layout';
+import Calendar from '../features/calendar/Calendar';
+import EvaluationList from '../features/evaluation/EvaluationList';
+import Login from '../features/auth/Login';
 import ProtectedRoute from './ProtectedRoute';
-import EventUpload from '../components/EventUpload';
+import EventUpload from '../features/upload/EventUpload';
 
 // 에러 페이지 컴포넌트
 const ErrorPage = () => {

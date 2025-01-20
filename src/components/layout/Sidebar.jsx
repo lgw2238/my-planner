@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import useStore from '../store/useStore';
+import useStore from '../../store/useStore';
 
 const Sidebar = () => {
   const location = useLocation();

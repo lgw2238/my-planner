@@ -6,37 +6,36 @@ const useStore = create(
     (set) => ({
       // 캘린더 이벤트 관련 상태와 액션
       events: {},
-      addEvent: (newEvent) => set((state) => {
-        const dateKey = newEvent.date;
+      addEvent: (event) => set((state) => {
+        const dateKey = event.date;
+        const existingEvents = state.events[dateKey] || [];
         return {
           events: {
             ...state.events,
-            [dateKey]: [...(state.events[dateKey] || []), newEvent]
+            [dateKey]: [...existingEvents, event]
           }
         };
       }),
       updateEvent: (updatedEvent) => set((state) => {
         const dateKey = updatedEvent.date;
+        const existingEvents = state.events[dateKey] || [];
         return {
           events: {
             ...state.events,
-            [dateKey]: state.events[dateKey].map(event =>
+            [dateKey]: existingEvents.map(event =>
               event.id === updatedEvent.id ? updatedEvent : event
             )
           }
         };
       }),
       deleteEvent: (dateKey, eventId) => set((state) => {
-        const updatedEvents = { ...state.events };
-        if (updatedEvents[dateKey]) {
-          updatedEvents[dateKey] = updatedEvents[dateKey].filter(
-            event => event.id !== eventId
-          );
-          if (updatedEvents[dateKey].length === 0) {
-            delete updatedEvents[dateKey];
+        const existingEvents = state.events[dateKey] || [];
+        return {
+          events: {
+            ...state.events,
+            [dateKey]: existingEvents.filter(event => event.id !== eventId)
           }
-        }
-        return { events: updatedEvents };
+        };
       }),
 
       // 인증 관련 상태와 액션
@@ -46,7 +45,7 @@ const useStore = create(
 
       // 사이드바 상태 관리
       isSidebarOpen: true,
-      toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen }))
+      toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
     }),
     {
       name: 'planner-storage',

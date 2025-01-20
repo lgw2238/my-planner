@@ -3,7 +3,7 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, addMonths, subMont
 import { ko } from 'date-fns/locale';
 import { v4 as uuidv4 } from 'uuid';
 import EventModal from './EventModal';
-import useStore from '../store/useStore';
+import useStore from '../../store/useStore';
 
 const Event = ({ event, dateKey, onDelete, onClick }) => {
   const handleDelete = (e) => {

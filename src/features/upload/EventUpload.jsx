@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
-import useStore from '../store/useStore';
+import useStore from '../../store/useStore';
 
 const EventUpload = () => {
   const [file, setFile] = useState(null);
