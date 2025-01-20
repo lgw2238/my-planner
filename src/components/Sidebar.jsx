@@ -8,7 +8,8 @@ const Sidebar = () => {
 
   const menuItems = [
     { path: '/', label: '일정 관리', icon: '📅' },
-    { path: '/evaluation', label: '평가 관리', icon: '📝' }
+    { path: '/event-upload', label: '일정 업로드', icon: '📤' },
+    { path: '/evaluation', label: '평가 관리', icon: '📝' },
   ];
 
   return (

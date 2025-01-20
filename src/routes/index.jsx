@@ -4,6 +4,7 @@ import Calendar from '../components/Calendar';
 import EvaluationList from '../components/EvaluationList';
 import Login from '../pages/Login';
 import ProtectedRoute from './ProtectedRoute';
+import EventUpload from '../components/EventUpload';
 
 // 에러 페이지 컴포넌트
 const ErrorPage = () => {
@@ -40,6 +41,12 @@ const router = createBrowserRouter([
       {
         path: '/evaluation',
         element: <EvaluationList />
+      },
+      {
+        path: '/event-upload',
+        element: (
+              <EventUpload />
+        )
       }
     ]
   },

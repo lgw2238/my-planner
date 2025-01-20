@@ -1,42 +1,84 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const EvaluationList = () => {
-  const evaluations = [
-    { id: 1, title: '2024년 1분기 평가', status: '진행중', dueDate: '2024-03-31' },
-    { id: 2, title: '2023년 4분기 평가', status: '완료', dueDate: '2023-12-31' },
-    { id: 3, title: '2023년 3분기 평가', status: '완료', dueDate: '2023-09-30' },
-  ];
+  const [evaluations] = useState([
+    {
+      id: 1,
+      title: 'First Quarter Performance Review',
+      status: 'Pending',
+      dueDate: '2024-03-31'
+    },
+    {
+      id: 2,
+      title: 'Annual Team Assessment',
+      status: 'Completed',
+      dueDate: '2024-12-31'
+    }
+  ]);
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold text-naver-pastel-navy mb-6">평가 관리</h2>
-      <div className="bg-white rounded-lg shadow">
-        <div className="grid grid-cols-4 gap-4 p-4 border-b bg-naver-pastel-gray/20 font-medium">
-          <div>평가명</div>
-          <div>상태</div>
-          <div>마감일</div>
-          <div>작업</div>
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-naver-pastel-navy">
+            Evaluation Management
+          </h2>
+          <button className="bg-naver-pastel-navy text-white px-4 py-2 rounded hover:bg-naver-pastel-navy/80">
+            Add New Evaluation
+          </button>
         </div>
-        {evaluations.map((evaluation) => (
-          <div key={evaluation.id} className="grid grid-cols-4 gap-4 p-4 border-b hover:bg-gray-50">
-            <div>{evaluation.title}</div>
-            <div>
-              <span className={`px-2 py-1 rounded-full text-sm ${
-                eval.status === '진행중' 
-                  ? 'bg-naver-pastel-blue/20 text-blue-700'
-                  : 'bg-naver-pastel-green/20 text-green-700'
-              }`}>
-                {eval.status}
-              </span>
-            </div>
-            <div>{eval.dueDate}</div>
-            <div>
-              <button className="text-naver-pastel-navy hover:underline">
-                상세보기
-              </button>
-            </div>
-          </div>
-        ))}
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Title
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Due Date
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {evaluations.map((evaluation) => (
+                <tr key={evaluation.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-900">
+                      {evaluation.title}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                      ${evaluation.status === 'Completed' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-yellow-100 text-yellow-800'}`}
+                    >
+                      {evaluation.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {evaluation.dueDate}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button className="text-naver-pastel-navy hover:text-naver-pastel-navy/80 mr-3">
+                      Edit
+                    </button>
+                    <button className="text-red-600 hover:text-red-900">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
