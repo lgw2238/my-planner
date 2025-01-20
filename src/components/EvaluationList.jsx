@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import EvaluationModal from './EvaluationModal';
 
 // 목업 데이터 생성
 const generateMockData = () => {
@@ -31,15 +32,49 @@ const generateMockData = () => {
 };
 
 const EvaluationList = () => {
-  const [evaluations] = useState(generateMockData());
+  const [evaluations, setEvaluations] = useState(generateMockData());
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEvaluation, setSelectedEvaluation] = useState(null);
   const itemsPerPage = 10;
 
-  // 현재 페이지의 데이터 계산
+  // calculate the index of the last item and the first item on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = evaluations.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(evaluations.length / itemsPerPage);
+
+  const handleAddEvaluation = (newEvaluation) => {
+    setEvaluations(prev => [...prev, newEvaluation]);
+  };
+
+  const handleEditEvaluation = (updatedEvaluation) => {
+    setEvaluations(prev =>
+      prev.map(item =>
+        item.id === updatedEvaluation.id ? updatedEvaluation : item
+      )
+    );
+  };
+
+  const handleDeleteEvaluation = (id) => {
+    if (window.confirm('Are you sure you want to delete this evaluation?')) {
+      setEvaluations(prev => prev.filter(item => item.id !== id));
+      
+      // in last data delete, total page number is decreased
+      const newTotalPages = Math.ceil((evaluations.length - 1) / itemsPerPage);
+      if (currentPage > newTotalPages) {
+        setCurrentPage(newTotalPages);
+      }
+    }
+  };
+
+  const handleSave = (evaluationData) => {
+    if (selectedEvaluation) {
+      handleEditEvaluation(evaluationData);
+    } else {
+      handleAddEvaluation(evaluationData);
+    }
+  };
 
   return (
     <div className="p-6">
@@ -48,7 +83,13 @@ const EvaluationList = () => {
           <h2 className="text-2xl font-bold text-naver-pastel-navy">
             Evaluation Management
           </h2>
-          <button className="bg-naver-pastel-navy text-white px-4 py-2 rounded hover:bg-naver-pastel-navy/80">
+          <button
+            onClick={() => {
+              setSelectedEvaluation(null);
+              setIsModalOpen(true);
+            }}
+            className="bg-naver-pastel-navy text-white px-4 py-2 rounded hover:bg-naver-pastel-navy/80"
+          >
             Add New Evaluation
           </button>
         </div>
@@ -98,10 +139,19 @@ const EvaluationList = () => {
                     {evaluation.dueDate}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button className="text-naver-pastel-navy hover:text-naver-pastel-navy/80 mr-3">
+                    <button
+                      onClick={() => {
+                        setSelectedEvaluation(evaluation);
+                        setIsModalOpen(true);
+                      }}
+                      className="text-naver-pastel-navy hover:text-naver-pastel-navy/80 mr-3"
+                    >
                       Edit
                     </button>
-                    <button className="text-red-600 hover:text-red-900">
+                    <button
+                      onClick={() => handleDeleteEvaluation(evaluation.id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
                       Delete
                     </button>
                   </td>
@@ -155,6 +205,16 @@ const EvaluationList = () => {
             </button>
           </div>
         </div>
+
+        <EvaluationModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedEvaluation(null);
+          }}
+          evaluation={selectedEvaluation}
+          onSave={handleSave}
+        />
       </div>
     </div>
   );
