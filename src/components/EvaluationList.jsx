@@ -1,20 +1,45 @@
 import React, { useState } from 'react';
 
+// 목업 데이터 생성
+const generateMockData = () => {
+  const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
+  const reviewTypes = [
+    'Performance Review',
+    'Team Assessment',
+    'Project Evaluation',
+    'Skills Assessment',
+    'Leadership Review',
+    'Peer Review'
+  ];
+
+  return Array.from({ length: 98 }, (_, index) => {
+    const year = 2024 - Math.floor(index / 24); // 4년치 데이터
+    const quarter = quarters[Math.floor((index % 24) / 6)];
+    const reviewType = reviewTypes[index % reviewTypes.length];
+    
+    return {
+      id: index + 1,
+      title: `${year} ${quarter} ${reviewType} #${index + 1}`,
+      status: index % 5 === 0 ? 'Completed' : 
+              index % 5 === 1 ? 'In Progress' : 
+              index % 5 === 2 ? 'Pending' : 
+              index % 5 === 3 ? 'Delayed' : 'Scheduled',
+      dueDate: new Date(year, Math.floor(index % 12), 15 + (index % 15))
+        .toISOString().split('T')[0]
+    };
+  });
+};
+
 const EvaluationList = () => {
-  const [evaluations] = useState([
-    {
-      id: 1,
-      title: 'First Quarter Performance Review',
-      status: 'Pending',
-      dueDate: '2024-03-31'
-    },
-    {
-      id: 2,
-      title: 'Annual Team Assessment',
-      status: 'Completed',
-      dueDate: '2024-12-31'
-    }
-  ]);
+  const [evaluations] = useState(generateMockData());
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // 현재 페이지의 데이터 계산
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = evaluations.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(evaluations.length / itemsPerPage);
 
   return (
     <div className="p-6">
@@ -47,7 +72,7 @@ const EvaluationList = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {evaluations.map((evaluation) => (
+              {currentItems.map((evaluation) => (
                 <tr key={evaluation.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
@@ -58,7 +83,13 @@ const EvaluationList = () => {
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                       ${evaluation.status === 'Completed' 
                         ? 'bg-green-100 text-green-800' 
-                        : 'bg-yellow-100 text-yellow-800'}`}
+                        : evaluation.status === 'In Progress' 
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : evaluation.status === 'Pending' 
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : evaluation.status === 'Delayed' 
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-blue-100 text-blue-800'}`}
                     >
                       {evaluation.status}
                     </span>
@@ -78,6 +109,51 @@ const EvaluationList = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="mt-6 flex justify-center">
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className={`px-3 py-1 rounded ${
+                currentPage === 1
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-naver-pastel-navy text-white hover:bg-naver-pastel-navy/80'
+              }`}
+            >
+              Previous
+            </button>
+
+            <div className="flex space-x-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
+                <button
+                  key={number}
+                  onClick={() => setCurrentPage(number)}
+                  className={`px-3 py-1 rounded ${
+                    currentPage === number
+                      ? 'bg-naver-pastel-navy text-white'
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  }`}
+                >
+                  {number}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className={`px-3 py-1 rounded ${
+                currentPage === totalPages
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-naver-pastel-navy text-white hover:bg-naver-pastel-navy/80'
+              }`}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -7,9 +7,9 @@ const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useStore();
 
   const menuItems = [
-    { path: '/', label: '일정 관리', icon: '📅' },
-    { path: '/event-upload', label: '일정 업로드', icon: '📤' },
-    { path: '/evaluation', label: '평가 관리', icon: '📝' },
+    { path: '/', label: 'Schedule Calender', icon: '📅' },
+    { path: '/event-upload', label: 'Upload Schedule', icon: '📤' },
+    { path: '/evaluation', label: 'Evaluation Management', icon: '📝' },
   ];
 
   return (
