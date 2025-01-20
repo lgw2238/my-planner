@@ -2,6 +2,7 @@
 
 react app (tailwind + jsx)
 
+```plaintext
 src/
 ├── assets/            # 이미지, 아이콘 등 정적 파일
 ├── components/        # 공통 컴포넌트
