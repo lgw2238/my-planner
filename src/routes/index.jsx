@@ -6,8 +6,9 @@ import Login from '../features/auth/Login';
 import ProtectedRoute from './ProtectedRoute';
 import EventUpload from '../features/upload/EventUpload';
 import EvaluationItemManagement from '../features/evaluation/EvaluationItemManagement';
+import ServerStatus from '../features/monitoring/ServerStatus';
 
-// 에러 페이지 컴포넌트
+// error page component 
 const ErrorPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: '/evaluation-items',
         element: <EvaluationItemManagement />
+      },
+      {
+        path: '/server-status',
+        element: <ServerStatus />
       }
     ]
   },

@@ -11,6 +11,7 @@ const Sidebar = () => {
     { path: '/event-upload', label: 'Upload Schedule', icon: '📤' },
     { path: '/evaluation', label: 'Evaluation Management', icon: '📝' },
     { path: '/evaluation-items', label: 'Evaluation Items', icon: '⚙️' },
+    { path: '/server-status', label: 'Server Status', icon: '🖥️' },
   ];
 
   return (
