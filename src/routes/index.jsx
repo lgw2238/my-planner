@@ -5,6 +5,7 @@ import EvaluationList from '../features/evaluation/EvaluationList';
 import Login from '../features/auth/Login';
 import ProtectedRoute from './ProtectedRoute';
 import EventUpload from '../features/upload/EventUpload';
+import EvaluationItemManagement from '../features/evaluation/EvaluationItemManagement';
 
 // 에러 페이지 컴포넌트
 const ErrorPage = () => {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
         element: (
               <EventUpload />
         )
+      },
+      {
+        path: '/evaluation-items',
+        element: <EvaluationItemManagement />
       }
     ]
   },

@@ -46,6 +46,20 @@ const useStore = create(
       // sidebar state management
       isSidebarOpen: true,
       toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
+
+      // evaluation items management
+      evaluationItems: [],
+      addEvaluationItem: (item) => set((state) => ({
+        evaluationItems: [...state.evaluationItems, item]
+      })),
+      updateEvaluationItem: (updatedItem) => set((state) => ({
+        evaluationItems: state.evaluationItems.map(item =>
+          item.id === updatedItem.id ? updatedItem : item
+        )
+      })),
+      deleteEvaluationItem: (itemId) => set((state) => ({
+        evaluationItems: state.evaluationItems.filter(item => item.id !== itemId)
+      })),
     }),
     {
       name: 'planner-storage',

@@ -7,9 +7,10 @@ const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useStore();
 
   const menuItems = [
-    { path: '/', label: 'Schedule Calender', icon: '📅' },
+    { path: '/', label: 'Schedule Calendar', icon: '📅' },
     { path: '/event-upload', label: 'Upload Schedule', icon: '📤' },
     { path: '/evaluation', label: 'Evaluation Management', icon: '📝' },
+    { path: '/evaluation-items', label: 'Evaluation Items', icon: '⚙️' },
   ];
 
   return (
