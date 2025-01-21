@@ -4,27 +4,40 @@ react app (tailwind + jsx)
 
 ```plaintext
 src/
-├── assets/            # 이미지, 아이콘 등 정적 파일
-├── components/        # 공통 컴포넌트
-│   └── layout/       # 레이아웃 관련 컴포넌트
-│       ├── Layout.jsx    # 전체 레이아웃 구조
-│       ├── Navbar.jsx    # 상단 네비게이션 바
-│       └── Sidebar.jsx   # 사이드 메뉴
-├── features/         # 주요 기능별 컴포넌트
-│   ├── auth/        # 인증 관련
-│   │   └── Login.jsx
-│   ├── calendar/    # 캘린더 기능
-│   │   ├── Calendar.jsx
-│   │   └── EventModal.jsx
-│   ├── evaluation/  # 평가 관리
-│   │   ├── EvaluationList.jsx
-│   │   └── EvaluationModal.jsx
-│   └── upload/      # 일정 업로드
-│       └── EventUpload.jsx
-├── routes/          # 라우팅 설정
-│   ├── index.jsx
-│   └── ProtectedRoute.jsx
-├── store/           # 상태 관리
-│   └── useStore.js  # Zustand store
-└── styles/          # 스타일 관련
-    └── index.css    # 전역 스타일
+├── api/
+│   └── axios.js                 # axios 인스턴스 및 인터셉터 설정
+│
+├── components/
+│   └── layout/
+│       ├── Layout.jsx          # 메인 레이아웃 컴포넌트
+│       └── Sidebar.jsx         # 사이드바 컴포넌트
+│
+├── features/
+│   ├── auth/
+│   │   └── Login.jsx          # 로그인 컴포넌트
+│   │
+│   ├── calendar/
+│   │   ├── Calendar.jsx       # 캘린더 메인 컴포넌트
+│   │   └── EventModal.jsx     # 일정 추가/수정 모달
+│   │
+│   ├── evaluation/
+│   │   ├── EvaluationList.jsx           # 평가 목록
+│   │   ├── EvaluationModal.jsx          # 평가 추가/수정 모달
+│   │   ├── EvaluationItemManagement.jsx # 평가 항목 관리
+│   │   └── EvaluationItemModal.jsx      # 평가 항목 추가/수정 모달
+│   │
+│   ├── monitoring/
+│   │   └── ServerStatus.jsx   # 서버 상태 모니터링
+│   │
+│   └── upload/
+│       └── EventUpload.jsx    # 일정 업로드
+│
+├── icons/
+│   └── UploadIcon.jsx         # 업로드 아이콘 컴포넌트
+│
+├── routes/
+│   ├── index.jsx              # 라우터 설정
+│   └── ProtectedRoute.jsx     # 인증 라우트 래퍼
+│
+└── store/
+    └── useStore.js            # Zustand 스토어 (상태 관리)
