@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username && password) {  // 실제 환경에서는 서버 인증을 구현해야함
+    if (username && password) {  // later.. server logic add
       handleLogin({ username });
       navigate(from, { replace: true });
     }
@@ -21,7 +21,7 @@ const Login = () => {
 
   const handleLogin = (userData) => {
     login(userData);
-    // 로그인 후 처리...
+    // after login processing...
   };
 
   return (

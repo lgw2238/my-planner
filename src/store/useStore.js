@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 const useStore = create(
   persist(
     (set) => ({
-      // 캘린더 이벤트 관련 상태와 액션
+      // calendar event related state and action
       events: {},
       addEvent: (event) => set((state) => {
         const dateKey = event.date;
@@ -38,12 +38,12 @@ const useStore = create(
         };
       }),
 
-      // 인증 관련 상태와 액션
+      // authentication related state and action
       user: null,
       login: (userData) => set({ user: userData }),
       logout: () => set({ user: null }),
 
-      // 사이드바 상태 관리
+      // sidebar state management
       isSidebarOpen: true,
       toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
     }),

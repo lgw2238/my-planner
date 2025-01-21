@@ -17,7 +17,7 @@ const EventUpload = () => {
   const handleCancelFile = () => {
     setFile(null);
     setError('');
-    // input 요소 초기화
+    // input init
     const fileInput = document.querySelector('input[type="file"]');
     if (fileInput) {
       fileInput.value = '';
@@ -31,7 +31,7 @@ const EventUpload = () => {
 
   const processExcel = async () => {
     if (!file) {
-      setError('파일을 선택해주세요.');
+      setError('Please select a file.');
       return;
     }
 
@@ -47,7 +47,7 @@ const EventUpload = () => {
 
       jsonData.forEach((row, index) => {
         if (!validateEventData(row)) {
-          errors.push(`Row ${index + 2}: 필수 필드가 누락되었습니다.`);
+          errors.push(`Row ${index + 2}: required fields are missing.`);
           return;
         }
 
@@ -66,14 +66,14 @@ const EventUpload = () => {
         return;
       }
 
-      // 서버로 데이터 전송 (API 구현 필요)
+      // send data to server (API implementation required)
       // const response = await fetch('/api/events/upload', {
       //   method: 'POST',
       //   headers: { 'Content-Type': 'application/json' },
       //   body: JSON.stringify(validEvents)
       // });
 
-      // 로컬 상태 업데이트
+      // update local state
       validEvents.forEach(event => {
         addEvent(event);
       });
@@ -91,18 +91,18 @@ const EventUpload = () => {
   const downloadTemplate = () => {
     const template = [
       {
-        title: '일정 제목',
+        title: 'schedule title',
         date: 'YYYYMMDD',
         startTime: 'HH:MM',
         endTime: 'HH:MM',
-        content: '일정 내용'
+        content: 'schedule content'
       }
     ];
 
     const ws = XLSX.utils.json_to_sheet(template);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, '일정 템플릿');
-    XLSX.writeFile(wb, '일정_업로드_템플릿.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, 'schedule template');
+    XLSX.writeFile(wb, 'schedule_upload_template.xlsx');
   };
 
   return (

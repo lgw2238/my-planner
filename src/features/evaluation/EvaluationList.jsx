@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import EvaluationModal from './EvaluationModal';
 
-// 목업 데이터 생성
+// mock data
 const generateMockData = () => {
   const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
   const reviewTypes = [

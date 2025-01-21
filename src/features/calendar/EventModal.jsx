@@ -51,7 +51,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
     e.preventDefault();
     
     if (!validateTimes()) {
-      alert('시작 시간이 종료 시간보다 빨라야 합니다.');
+      alert('start time must be earlier than end time.');
       return;
     }
     

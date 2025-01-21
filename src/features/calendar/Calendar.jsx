@@ -162,7 +162,7 @@ const Calendar = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (window.confirm('이 일정을 삭제하시겠습니까?')) {
+                  if (window.confirm('really delete this schedule?')) {
                     deleteEvent(dateKey, event.id);
                   }
                 }}
@@ -231,6 +231,7 @@ const Calendar = () => {
       <div className="flex flex-1 overflow-auto">
         {/* time column */}
         <div className="w-20 flex-shrink-0 border-r">
+          <div className="h-[68px] border-b" />
           {timeSlots.map((time) => (
             <div key={time} className="h-20 border-b px-2 py-1 text-sm text-gray-500">
               {time}
@@ -243,7 +244,7 @@ const Calendar = () => {
           {days.map((day) => (
             <div key={format(day, 'yyyyMMdd')} className="flex-1">
               <div className={`
-                sticky top-0 p-2 text-center border-b bg-white z-20
+                sticky top-0 p-2 text-center border-b bg-white z-20 h-[68px] flex flex-col justify-center
                 ${format(day, 'E') === 'Sun' ? 'text-red-400' : ''}
                 ${format(day, 'E') === 'Sat' ? 'text-blue-400' : ''}
               `}>
