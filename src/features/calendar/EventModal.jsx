@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
 
 const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) => {
   const [eventData, setEventData] = useState({
@@ -12,14 +11,29 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
   });
 
   useEffect(() => {
-    setEventData({
-      title: selectedEvent?.title || '',
-      date: selectedEvent?.date || selectedDate || '',
-      startTime: selectedEvent?.startTime || '',
-      endTime: selectedEvent?.endTime || '',
-      content: selectedEvent?.content || ''
-    });
-  }, [selectedEvent, selectedDate]);
+    if (selectedEvent) {
+      setEventData({
+        title: selectedEvent.title,
+        date: selectedEvent.date,
+        startTime: selectedEvent.startTime,
+        endTime: selectedEvent.endTime,
+        content: selectedEvent.content || ''
+      });
+    } else if (selectedDate) {
+      setEventData({
+        ...eventData,
+        date: selectedDate
+      });
+    } else {
+      setEventData({
+        title: '',
+        date: format(new Date(), 'yyyyMMdd'),
+        startTime: '',
+        endTime: '',
+        content: ''
+      });
+    }
+  }, [selectedEvent, selectedDate, isOpen]);
 
   const validateTimes = () => {
     if (!eventData.startTime || !eventData.endTime) return true;
@@ -37,7 +51,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
     e.preventDefault();
     
     if (!validateTimes()) {
-      alert('Start time must be earlier than end time.');
+      alert('시작 시간이 종료 시간보다 빨라야 합니다.');
       return;
     }
     
@@ -69,11 +83,11 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
         <div className="flex justify-between items-center mb-4">
           <div>
             <h2 className="text-xl font-bold text-color-pastel-navy">
-              {selectedEvent ? 'Event Details' : 'Add New Event'}
+              {selectedEvent ? 'edit schedule' : 'new schedule'}
             </h2>
             {eventData.date && (
               <p className="text-sm text-gray-500 mt-1">
-                {format(new Date(eventData.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')), 'MMMM d, yyyy')}
+                {format(new Date(eventData.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')), 'yyyy년 MM월 dd일')}
               </p>
             )}
           </div>
@@ -141,14 +155,12 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               readOnly={selectedEvent}
             />
           </div>
-          {!selectedEvent && (
-            <button
-              type="submit"
-              className="w-full bg-color-pastel-navy text-white py-2 rounded hover:bg-color-pastel-navy/80"
-            >
-              Save
-            </button>
-          )}
+          <button
+            type="submit"
+            className="w-full bg-color-pastel-navy text-white py-2 rounded hover:bg-color-pastel-navy/80"
+          >
+            {selectedEvent ? 'EDIT' : 'SAVE'}
+          </button>
         </form>
       </div>
     </div>
