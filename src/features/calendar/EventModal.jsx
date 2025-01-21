@@ -87,7 +87,7 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
             </h2>
             {eventData.date && (
               <p className="text-sm text-gray-500 mt-1">
-                {format(new Date(eventData.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')), 'yyyy년 MM월 dd일')}
+                {format(new Date(eventData.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')), 'yyyy.MM.dd')}
               </p>
             )}
           </div>
@@ -107,7 +107,6 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               onChange={(e) => setEventData({ ...eventData, title: e.target.value })}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               required
-              readOnly={selectedEvent}
             />
           </div>
           <div>
@@ -118,7 +117,6 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               onChange={handleDateChange}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               required
-              readOnly={selectedEvent}
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -130,7 +128,6 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
                 onChange={(e) => handleTimeChange('startTime', e.target.value)}
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
                 required
-                readOnly={selectedEvent}
               />
             </div>
             <div>
@@ -141,7 +138,6 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
                 onChange={(e) => handleTimeChange('endTime', e.target.value)}
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
                 required
-                readOnly={selectedEvent}
               />
             </div>
           </div>
@@ -152,15 +148,25 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               onChange={(e) => setEventData({ ...eventData, content: e.target.value })}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy h-24"
               required
-              readOnly={selectedEvent}
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-color-pastel-navy text-white py-2 rounded hover:bg-color-pastel-navy/80"
-          >
-            {selectedEvent ? 'EDIT' : 'SAVE'}
-          </button>
+          <div className="flex gap-2">
+            {selectedEvent && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 bg-gray-500 text-white py-2 rounded hover:bg-gray-600"
+              >
+                CANCEL
+              </button>
+            )}
+            <button
+              type="submit"
+              className={`${selectedEvent ? 'flex-1' : 'w-full'} bg-color-pastel-navy text-white py-2 rounded hover:bg-color-pastel-navy/80`}
+            >
+              {selectedEvent ? 'EDIT' : 'SAVE'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
