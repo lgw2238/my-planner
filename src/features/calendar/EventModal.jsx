@@ -7,7 +7,8 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
     date: '',
     startTime: '',
     endTime: '',
-    content: ''
+    content: '',
+    isAllDay: false
   });
 
   useEffect(() => {
@@ -17,12 +18,16 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
         date: selectedEvent.date,
         startTime: selectedEvent.startTime,
         endTime: selectedEvent.endTime,
-        content: selectedEvent.content || ''
+        content: selectedEvent.content || '',
+        isAllDay: selectedEvent.isAllDay || false
       });
     } else if (selectedDate) {
       setEventData({
         ...eventData,
-        date: selectedDate
+        date: selectedDate,
+        isAllDay: false,
+        startTime: '',
+        endTime: ''
       });
     } else {
       setEventData({
@@ -30,7 +35,8 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
         date: format(new Date(), 'yyyyMMdd'),
         startTime: '',
         endTime: '',
-        content: ''
+        content: '',
+        isAllDay: false
       });
     }
   }, [selectedEvent, selectedDate, isOpen]);
@@ -73,6 +79,16 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
       const newData = { ...prev, [type]: value };
       return newData;
     });
+  };
+
+  const handleAllDayChange = (e) => {
+    const isChecked = e.target.checked;
+    setEventData(prev => ({
+      ...prev,
+      isAllDay: isChecked,
+      startTime: isChecked ? '00:00' : '',
+      endTime: isChecked ? '23:59' : ''
+    }));
   };
 
   if (!isOpen) return null;
@@ -119,6 +135,18 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
               required
             />
           </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="allDay"
+              checked={eventData.isAllDay}
+              onChange={handleAllDayChange}
+              className="w-4 h-4 text-color-pastel-navy rounded border-gray-300 focus:ring-color-pastel-navy"
+            />
+            <label htmlFor="allDay" className="ml-2 block text-gray-700">
+              All day
+            </label>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 mb-2">Start Time</label>
@@ -126,8 +154,9 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
                 type="time"
                 value={eventData.startTime}
                 onChange={(e) => handleTimeChange('startTime', e.target.value)}
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
+                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy disabled:bg-gray-100"
                 required
+                disabled={eventData.isAllDay}
               />
             </div>
             <div>
@@ -136,8 +165,9 @@ const EventModal = ({ isOpen, onClose, onSave, selectedEvent, selectedDate }) =>
                 type="time"
                 value={eventData.endTime}
                 onChange={(e) => handleTimeChange('endTime', e.target.value)}
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
+                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-color-pastel-navy disabled:bg-gray-100"
                 required
+                disabled={eventData.isAllDay}
               />
             </div>
           </div>
