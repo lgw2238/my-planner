@@ -10,12 +10,12 @@ const axiosInstance = axios.create({
   }
 });
 
-// 응답 인터셉터
+// response interceptor
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // 인증 에러 처리
+      // authentication error handling
       window.location.href = '/login';
     }
     return Promise.reject(error);
