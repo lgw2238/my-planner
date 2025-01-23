@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
   }
 });
 
-// request interceptor
+// request interceptor (set up token)
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = useStore.getState().token;
