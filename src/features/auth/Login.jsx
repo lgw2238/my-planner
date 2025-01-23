@@ -1,27 +1,57 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axiosInstance from '../../api/axios';
 import useStore from '../../store/useStore';
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const login = useStore((state) => state.login);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const { setIsLoggedIn, setToken, token } = useStore();
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
   
   const from = location.state?.from?.pathname || '/';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (username && password) {  // later.. server logic add
-      handleLogin({ username });
-      navigate(from, { replace: true });
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleLogin = (userData) => {
-    login(userData);
-    // after login processing...
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosInstance.post('/api/auth/createToken', formData);
+      console.log("jwt login response:", response.data);
+      if (response.data) {
+        setToken(response.data);
+        // user interface       
+        const userData = {
+          name: formData.username, 
+          // another user data
+        };
+        setIsLoggedIn(true, userData);
+        console.log("Login successful:", { token: response.data, isLoggedIn: true });
+        console.log("Stored token:", useStore.getState().token);
+        navigate(from, { replace: true });
+      } else {
+        // if non token
+        setToken('');
+        setIsLoggedIn(false);
+        setError('Warning: No token received');
+      }
+    } catch (error) {
+      // api request failed
+      console.error('Login failed:', error);
+      setToken('');
+      setIsLoggedIn(false);
+      setError('Warning: Authentication failed');
+    }
   };
 
   return (
@@ -36,8 +66,9 @@ const Login = () => {
             <input
               id="username"
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               placeholder="Enter your username"
               required
@@ -50,13 +81,19 @@ const Login = () => {
             <input
               id="password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-color-pastel-navy"
               placeholder="Enter your password"
               required
             />
           </div>
+          {error && (
+            <div className="text-yellow-600 text-sm text-center">
+              {error}
+            </div>
+          )}
           <button
             type="submit"
             className="w-full bg-color-pastel-navy text-white py-2 rounded-lg hover:bg-color-pastel-navy/80 transition-colors"

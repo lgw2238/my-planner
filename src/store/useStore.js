@@ -38,11 +38,6 @@ const useStore = create(
         };
       }),
 
-      // authentication related state and action
-      user: null,
-      login: (userData) => set({ user: userData }),
-      logout: () => set({ user: null }),
-
       // sidebar state management
       isSidebarOpen: true,
       toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
@@ -60,6 +55,13 @@ const useStore = create(
       deleteEvaluationItem: (itemId) => set((state) => ({
         evaluationItems: state.evaluationItems.filter(item => item.id !== itemId)
       })),
+      // authentication status set up method
+      isLoggedIn: false,
+      token: '',
+      user: null,
+      setIsLoggedIn: (value, userData) => set({ isLoggedIn: value, user: userData }),
+      setToken: (token) => set({ token }),
+      logout: () => set({ isLoggedIn: false, token: '', user: null }),
     }),
     {
       name: 'planner-storage',

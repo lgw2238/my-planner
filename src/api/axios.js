@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useStore from '../store/useStore';
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 
@@ -9,6 +10,20 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   }
 });
+
+// request interceptor
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = useStore.getState().token;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // response interceptor
 axiosInstance.interceptors.response.use(
