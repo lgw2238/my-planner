@@ -24,33 +24,37 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("request login data:", formData);
     e.preventDefault();
+    // for test login logic data layer upper
+    const userData = {
+        name: formData.username, 
+        // another user data
+      };
     try {
-      const response = await axiosInstance.post('/api/auth/createToken', formData);
+      const response = await axiosInstance.post('/api/auth/login', formData);
       console.log("jwt login response:", response.data);
       if (response.data) {
         setToken(response.data);
         // user interface       
-        const userData = {
-          name: formData.username, 
-          // another user data
-        };
         setIsLoggedIn(true, userData);
         console.log("Login successful:", { token: response.data, isLoggedIn: true });
         console.log("Stored token:", useStore.getState().token);
         navigate(from, { replace: true });
       } else {
         // if non token
-        setToken('');
-        setIsLoggedIn(false);
+        setToken('ifnonToken');
+        setIsLoggedIn(true, userData);
         setError('Warning: No token received');
+        navigate(from, { replace: true }); // failed - force login
       }
     } catch (error) {
       // api request failed
-      console.error('Login failed:', error);
-      setToken('');
-      setIsLoggedIn(false);
+      console.log('Login failed:', "Login failed but we allow to login");
+      setToken('errorToken');
+      setIsLoggedIn(true, userData);
       setError('Warning: Authentication failed');
+      navigate(from, { replace: true }); // failed - force login
     }
   };
 
