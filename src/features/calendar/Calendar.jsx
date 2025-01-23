@@ -4,6 +4,7 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, addMonths, subMont
 import { v4 as uuidv4 } from 'uuid';
 import EventModal from './EventModal';
 import useStore from '../../store/useStore';
+import { holidays } from '../../utils/holidays';
 
 const Event = ({ event, dateKey, onDelete, onClick, setIsModalOpen }) => {
   const handleDelete = (e) => {
@@ -162,7 +163,7 @@ const Calendar = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (window.confirm('really delete this schedule?')) {
+                  if (window.confirm('really delete this event?')) {
                     deleteEvent(dateKey, event.id);
                   }
                 }}
@@ -197,21 +198,33 @@ const Calendar = () => {
       <div className="grid grid-cols-7 gap-2 flex-1">
         {days.map((day) => {
           const dateKey = format(day, 'yyyyMMdd');
+          const holiday = holidays[dateKey];
           return (
             <div
               key={dateKey}
               className={`
                 min-h-[120px] p-3 border border-gray-100 rounded
-                ${format(day, 'MM') !== format(currentDate, 'MM') ? 'bg-gray-50' : 'bg-white'}
+                ${format(day, 'MM') !== format(currentDate, 'MM') 
+                  ? 'bg-gray-100/50 text-gray-400' 
+                  : 'bg-white'
+                }
                 ${isSameDay(day, new Date()) ? 'bg-color-pastel-navy/10' : ''}
               `}
             >
               <div className={`
                 text-right mb-2 text-lg font-medium
-                ${format(day, 'E') === 'Sun' ? 'text-red-400' : ''}
-                ${format(day, 'E') === 'Sat' ? 'text-blue-400' : ''}
+                ${format(day, 'MM') !== format(currentDate, 'MM')
+                  ? 'text-gray-400'
+                  : `${format(day, 'E') === 'Sun' || holiday ? 'text-red-400' : ''}
+                     ${format(day, 'E') === 'Sat' ? 'text-blue-400' : ''}`
+                }
               `}>
                 {format(day, 'd')}
+                {holiday && (
+                  <div className="text-xs text-red-400 text-left mt-1">
+                    {holiday.name}
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 {renderEvents(day)}
@@ -241,27 +254,36 @@ const Calendar = () => {
         
         {/* day column */}
         <div className={`flex flex-1 ${viewType === 'day' ? '' : 'divide-x'}`}>
-          {days.map((day) => (
-            <div key={format(day, 'yyyyMMdd')} className="flex-1">
-              <div className={`
-                sticky top-0 p-2 text-center border-b bg-white z-20 h-[68px] flex flex-col justify-center
-                ${format(day, 'E') === 'Sun' ? 'text-red-400' : ''}
-                ${format(day, 'E') === 'Sat' ? 'text-blue-400' : ''}
-              `}>
-                <div className="font-medium">{format(day, 'E')}</div>
-                <div className="text-lg">{format(day, 'd')}</div>
+          {days.map((day) => {
+            const dateKey = format(day, 'yyyyMMdd');
+            const holiday = holidays[dateKey];
+            return (
+              <div key={dateKey} className="flex-1">
+                <div className={`
+                  sticky top-0 p-2 text-center border-b bg-white z-20 h-[68px] flex flex-col justify-center
+                  ${format(day, 'E') === 'Sun' || holiday ? 'text-red-400' : ''}
+                  ${format(day, 'E') === 'Sat' ? 'text-blue-400' : ''}
+                `}>
+                  <div className="font-medium">{format(day, 'E')}</div>
+                  <div className="text-lg">{format(day, 'd')}</div>
+                  {holiday && (
+                    <div className="text-xs text-red-400">
+                      {holiday.name}
+                    </div>
+                  )}
+                </div>
+                <div className="relative">
+                  {timeSlots.map((time) => (
+                    <div key={time} className="h-20 border-b relative">
+                      <div className="absolute left-0 right-0 -top-[1px] h-[1px] bg-gray-300" />
+                    </div>
+                  ))}
+                  {/* render events */}
+                  {renderEvents(day, viewType)}
+                </div>
               </div>
-              <div className="relative">
-                {timeSlots.map((time) => (
-                  <div key={time} className="h-20 border-b relative">
-                    <div className="absolute left-0 right-0 -top-[1px] h-[1px] bg-gray-300" />
-                  </div>
-                ))}
-                {/* render events */}
-                {renderEvents(day, viewType)}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );
