@@ -150,7 +150,7 @@ const Calendar = () => {
             zIndex: 10,
           }}
           onClick={() => {
-            setSelectedEvent(event);
+            setSelectedEvent(event || null);;
             setIsModalOpen(true);
           }}
         >
@@ -209,7 +209,7 @@ const Calendar = () => {
                   : 'bg-white'
                 }
                 ${isSameDay(day, new Date()) ? 'bg-color-pastel-navy/10' : ''}
-              `}
+                `}
             >
               <div className={`
                 text-right mb-2 text-lg font-medium

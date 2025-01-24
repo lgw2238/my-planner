@@ -2,9 +2,12 @@ import axios from 'axios';
 import useStore from '../store/useStore';
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
-
-const axiosInstance = axios.create({
+const clientEnv = process.env.REACT_APP_ENV;
+console.log("baseURL:", baseURL);
+console.log("clientEnv:", clientEnv);
+const axiosInstance = axios.create({    
   baseURL,
+  clientEnv,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',

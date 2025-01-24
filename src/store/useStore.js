@@ -64,7 +64,7 @@ const useStore = create(
       logout: () => set({ isLoggedIn: false, token: '', user: null }),
     }),
     {
-      name: 'planner-storage',
+      name: 'local-planner-storage',
     }
   )
 );

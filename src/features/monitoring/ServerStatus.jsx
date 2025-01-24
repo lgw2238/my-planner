@@ -50,7 +50,8 @@ const ServerStatus = () => {
   const checkHealth = async () => {
     setIsLoading(true);
     const newStatus = {};
-
+    const clientEnv = process.env.REACT_APP_ENV;
+    console.log("health check env:", clientEnv);
     for (const api of API_LIST) {
       const startTime = performance.now();
       try {
