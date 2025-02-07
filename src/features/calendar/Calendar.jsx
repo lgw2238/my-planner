@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, addMonths, subMonths, 
   startOfWeek, endOfWeek, addWeeks, subWeeks, addDays, subDays, isSameDay } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
 import EventModal from './EventModal';
 import useStore from '../../store/useStore';
 import { holidays } from '../../utils/holidays';
+import axiosInstance from '../../api/axios'; 
 
 const Event = ({ event, dateKey, onDelete, onClick, setIsModalOpen }) => {
   const handleDelete = (e) => {
@@ -48,12 +49,42 @@ const timeToMinutes = (time) => {
 };
 
 const Calendar = () => {
-  const { events, addEvent, updateEvent, deleteEvent } = useStore();
+  const { events, addEvent, updateEvent, deleteEvent, setEvents } = useStore();
+  const token  = useStore.getState().token.data;
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewType, setViewType] = useState('month'); // 'month', 'week', 'day'
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  console.log('calendar/list env:', process.env.REACT_APP_ENV);
+  console.log('calendar/list token:', token);
+
+  useEffect(() => {
+    if (process.env.REACT_APP_ENV === 'dev') {
+      axiosInstance.post('/api/calendar/list', null, {
+        headers: {
+          Authorization: `Bearer ${useStore.getState().token.data}`,
+        },
+        withCredentials: true 
+      })
+        .then(response => {
+          if (response.status === 200) {
+            const storedEvents = response.data;
+            setEvents(storedEvents);
+          }
+        })
+        .catch(error => {
+          if (error instanceof SyntaxError) {
+            console.log('Error fetching events:', error.message);
+          } else {
+            console.log('Error fetching events:', error);
+          }
+        });
+    } else {
+      const storedEvents = JSON.parse(localStorage.getItem('events')) || {};
+      setEvents(storedEvents);
+    }
+  }, []);
 
   // date handler
   const handlePrev = () => {
@@ -66,6 +97,9 @@ const Calendar = () => {
         break;
       case 'day':
         setCurrentDate(subDays(currentDate, 1));
+        break;
+      default:
+        setCurrentDate(subMonths(currentDate, 1));
         break;
     }
   };

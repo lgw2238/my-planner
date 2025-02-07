@@ -42,7 +42,7 @@ const Login = () => {
         // user interface       
         setIsLoggedIn(true, userData);
         console.log("Login successful:", { token: response.data, isLoggedIn: true });
-        console.log("Stored token:", useStore.getState().token);
+        console.log("Stored token:", useStore.getState().token.data);
         navigate(from, { replace: true });
       } else {
         // if non token

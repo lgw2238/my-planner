@@ -37,6 +37,7 @@ const useStore = create(
           }
         };
       }),
+      setEvents: (newEvents) => set({ events: newEvents }),
 
       // sidebar state management
       isSidebarOpen: true,
